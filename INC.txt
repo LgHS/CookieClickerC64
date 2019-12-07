@@ -1,5 +1,5 @@
 'I = increment de base
-'M% = mutliplier
+'M = mutliplier
 'U1% = update 1 status (int)
 'U2% = update 2 status (int)
 'U1P = Price Update 1 (float)
@@ -9,7 +9,7 @@
 'B1% = Building 1 (int)
 
 100 I = 0
-101 M% = 1
+101 M = 1
 
 102 U1% = 0
 103 U2% = 0
@@ -28,40 +28,43 @@
 212 WAIT 162,64
 
 'Basic increment
-213 I = I + (1 * M%) 'Upgrades increments
+213 I = I + (1 * M) 'Upgrades increments
 214 I = I + (0.25 * B1%) 'Buildings increments
-215 PRINT "TOT.: "; I; " +"; M%
+215 PRINT "TOT.: "; I; " +"; M
 
 'Get input and store it in K$
 219 GET K$
+'219 PRINT K$
 
 220 IF K$ = " " THEN GOSUB 1000: GOTO 219
 221 IF I = 69 THEN PRINT "LOL"
 
 'Get first update control
-222 IF U1% = 0  AND I > U1 THEN PRINT "TYPE 1 TO GET U1 (DOUBLE INC FACTOR)"
-223 IF K$ = "1" AND I > U1P AND U1% = 0 THEN GOSUB 2000: GOTO 219
+222 IF U1% = 0  AND I > U1 THEN PRINT "TYPE + TO GET NEXT UPGRADE (INC FACTOR +1%)"
+223 IF K$ = CHR$(43) AND I > U1P AND U1% = 0 THEN GOSUB 2000: GOTO 219
 
 'Get 2nd update control
-224 IF U2% = 0  AND I > U2 THEN PRINT "TYPE 2 TO GET U2 (DOUBLE INC FACTOR)"
-225 IF K$ = "2" AND I > U2P AND U2% = 0 THEN GOSUB 3000: GOTO 219
+224 IF U2% = 0  AND I > U2 THEN PRINT "TYPE + TO GET NEXT UPGRADE (INC FACTOR +1%)"
+225 IF K$ = "+" AND I > U2P AND U2% = 0 THEN GOSUB 3000: GOTO 219
+
 
 249 GOTO 211
-
 250 END
 
 'Increment normally when key pressed
 1000 I = I + 1
-1001 REM PRINT "TOTAL: "; I; " INC FACT.: "; M%
+1001 REM PRINT "TOTAL: "; I; " INC FACT.: "; M
 1003 RETURN
 
+'Get first cookie update fct
 2000 U1% = 1
-2001 M% = M% * 2
+2001 M = M + ((M/100) * 1)
 2002 I = I - U1P
 2003 RETURN
 
+'Get 2nd cookie update fct
 3000 U2% = 1
-3001 M% = M% * 2
+3001 M = M + ((M/100) * 1)
 3002 I = I - U2P
 3003 RETURN
 

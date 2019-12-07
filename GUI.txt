@@ -353,17 +353,61 @@
 
 101 TC$ = "COOKIES"
 101 FOR T=0 TO LEN(TC$)-1
-101 POKE (1024+6+40*3)+T,ASC(MID$(TC$,T+1,1)) AND 63
+101 POKE (1024+6+40*2)+T,ASC(MID$(TC$,T+1,1)) AND 63
 101 NEXT T
 
+101 TK$ = "Press space to bake"
+101 FOR T=0 TO LEN(TK$)-1
+101 POKE (1024+1+40*6)+T,ASC(MID$(TK$,T+1,1)) AND 63
+101 NEXT T
+
+
 'increments
-210 INC = 0
+210 COOKIES = 0 
+210 GOSUB 3001
+214 GOSUB 4000
 214 GOSUB 1000
 220 GOTO 214
 
-1000 INC = INC + 1
-1001 INC$ = STR$(INC)
-1001 FOR T=0 TO LEN(INC$)-1
-1001 POKE (1024+5+40*4)+T,ASC(MID$(INC$,T+1,1)) AND 63
-1001 NEXT T
-1003 RETURN
+
+
+1000 GET K$
+1001 IF K$ = " " THEN GOSUB 2000: GOTO 1000
+1002 RETURN
+
+1998 GOTO 220
+1999 END
+
+'Increment normally when key pressed
+2000 COOKIES = COOKIES + 1
+
+	'Print total COOKIES'
+	3001 COOKIES$ = STR$(COOKIES)
+	3002 FOR T=0 TO LEN(COOKIES$)-1 'print num of cookies
+	3003 POKE (1024+5+40*4)+T,ASC(MID$(COOKIES$,T+1,1)) AND 63 'print num of cookies
+	3004 NEXT T 'return at begining of fct
+	3005 RETURN
+
+'Building: cursor
+4000 B1P = 15 'Base price
+4001 B1% = 0 'Building counter
+
+4002 IF COOKIES > B1P THEN GOSUB 4500
+
+4500 'poke qty on building zone and increment
+4501 B1% = B1% + 1
+4502 'buy the building
+4503 COOKIES = COOKIES - B1%
+4504 B1P = B1P + 2
+
+4510 B1_STR$ = STR$(B1%)
+4511 FOR T=0 TO LEN(B1_STR$)-1 'print num of cookies
+4512 POKE (1024+3+40*34)+T,ASC(MID$(B1_STR$,T+1,1)) AND 63 'print num of cookies
+4513 NEXT T 'return at begining of fct
+
+4599 RETURN
+
+
+/****************************
+Syntax error
+******************************/

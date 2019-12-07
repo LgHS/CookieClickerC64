@@ -23,11 +23,14 @@
 
 210 PRINT "ENTER SPACE TO INCREMENT"
 
+'1sec delay
 211 TI$="000000"
 212 WAIT 162,64
-213 I = I + (1 * M%)
-214 PRINT "TOT.: "; I; " +"; M%
-217 I = I + (0.25 * B1%)
+
+'Basic increment
+213 I = I + (1 * M%) 'Upgrades increments
+214 I = I + (0.25 * B1%) 'Buildings increments
+215 PRINT "TOT.: "; I; " +"; M%
 
 'Get input and store it in K$
 219 GET K$

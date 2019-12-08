@@ -497,6 +497,8 @@
 
 1000 GET K$
 1000 GOSUB 3000 'print_cookies_fct
+1000 GOSUB 4020 'poke_cursor_base_price
+1000 GOSUB 4120 'poke_grandma_base_price
 
 1001 IF K$ = " " THEN GOSUB 2000: GOTO 1000 'Watch if space is pressed
 1002 IF K$ = "1" AND {var:cookies} > B1P THEN GOSUB 4000 'Watch if can buy B1
@@ -546,3 +548,12 @@
 	4024 L = 0
 	4025 RETURN
 'end poke_cursor_base_price
+
+'poke_grandma_base_price
+	4120 L = LEN({var:grandmaBasePriceStr$})-1
+	4121 FOR T=0 TO L 'print price
+	4122 POKE (1024+34+40*5)+L+T,ASC(MID$({var:grandmaBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4123 NEXT T
+	4124 L = 0
+	4125 RETURN
+'end poke_grandma_base_price

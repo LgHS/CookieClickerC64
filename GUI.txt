@@ -311,8 +311,8 @@
 101 poke (1024+19+40*24),67
 
 'Variables
-{var:cursorBasePrice=cp} 'float
-{var:cursorBasePriceStr$=cs$} 'string
+{var:cursorBasePrice=bp} 'float
+{var:cursorBasePriceStr$=bs$} 'string
 
 {var:grandmaBasePrice=gp} 'float
 {var:grandmaBasePriceStr$=gs$} 'string
@@ -335,11 +335,66 @@
 {var:timeMachineBasePrice=tp} 'float
 {var:timeMachineBasePriceStr$=ts$} 'string
 
-{var:cursorQty%=bq%}
-{var:cursorQtyStr$=qs$}
+{var:cursorQty%=bq} 'int
+{var:cursorQtyStr$=bz$} 'string
 
-{var:cookies=co}
-{var:cookiesStr$=ct$}
+{var:grandmaQty%=gq} 'int
+{var:grandmaQtyStr$=gz$} 'string
+
+{var:factoryQty%=fq} 'int
+{var:factoryQtyStr$=fz$} 'string
+
+{var:mineQty%=mq} 'int
+{var:mineQtyStr$=mz$} 'string
+
+{var:shipmentQty%=sq} 'int
+{var:shipmentQtyStr$=sz$} 'string
+
+{var:alchemyLabQty%=aq} 'int
+{var:alchemyLabQtyStr$=az$} 'string
+
+{var:portalQty%=pq} 'int
+{var:portalQtyStr$=pz$} 'string
+
+{var:timeMachineQty%=tq} 'int
+{var:timeMachineQtyStr$=tz$} 'string
+
+101 {var:cursorBasePrice} = 15
+101 {var:grandmaBasePrice} = 100
+101 {var:factoryBasePrice} = 50
+101 {var:mineBasePrice} = 200
+101 {var:shipmentBasePrice} = 7000
+101 {var:alchemyLabBasePrice} = 50000
+101 {var:portalBasePrice} = 1000000
+101 {var:timeMachineBasePrice} = 123456789
+101 {var:cursorQty%} = 0
+101 {var:grandmaQty%} = 0
+101 {var:factoryQty%} = 0
+101 {var:mineQty%} = 0
+101 {var:shipmentQty%} = 0
+101 {var:alchemyLabQty%} = 0
+101 {var:portalQty%} = 0
+101 {var:timeMachineQty%} = 0
+
+101 {var:cursorBasePriceStr$} = STR$({var:cursorBasePrice})
+101 {var:grandmaBasePriceStr$} = STR$({var:grandmaBasePrice})
+101 {var:factoryBasePriceStr$} = STR$({var:factoryBasePrice})
+101 {var:mineBasePriceStr$} = STR$({var:mineBasePrice})
+101 {var:shipmentBasePriceStr$} = STR$({var:shipmentBasePrice})
+101 {var:alchemyLabBasePriceStr$} = STR$({var:alchemyLabBasePrice})
+101 {var:portalBasePriceStr$} = STR$({var:portalBasePrice})
+101 {var:timeMachineBasePriceStr$} = STR$({var:timeMachineBasePrice})
+101 {var:cursorQtyStr$} = STR$({var:cursorQty%})
+101 {var:grandmaQtyStr$} = STR$({var:grandmaQty%})
+101 {var:factoryQtyStr$} = STR$({var:factoryQty%})
+101 {var:mineQtyStr$} = STR$({var:mineQty%})
+101 {var:shipmentQtyStr$} = STR$({var:shipmentQty%})
+101 {var:alchemyLabQtyStr$} = STR$({var:alchemyLabQty%})
+101 {var:portalQtyStr$} = STR$({var:portalQty%})
+101 {var:timeMachineQtyStr$} = STR$({var:timeMachineQty%})
+
+101 {var:cookies=co}
+101 {var:cookiesStr$=cz$}
 
 'texts
 101 TP$ = "Price"
@@ -478,11 +533,16 @@
 	4013 NEXT T 'return at begining of loop
 	4014 L = 0
 
-	4014 L = LEN({var:cursorBasePriceStr$})-1
-	4014 FOR T=0 TO L 'print price
-	4015 POKE (1024+34+40*2)+L+T,ASC(MID$({var:cursorBasePriceStr$},T+1,1)) AND 63 'print num of buildings
-	4016 NEXT T
-	4017 L = 0
+	4015 GOSUB 4020
 
-	4199 RETURN
+	4099 RETURN
 'end building_cursor_watcher'
+
+'poke_cursor_base_price
+	4020 L = LEN({var:cursorBasePriceStr$})-1
+	4021 FOR T=0 TO L 'print price
+	4022 POKE (1024+34+40*2)+L+T,ASC(MID$({var:cursorBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4023 NEXT T
+	4024 L = 0
+	4025 RETURN
+'end poke_cursor_base_price

@@ -1,4 +1,5 @@
 {renumber}
+
 100 REM Creating interface
 
 'go home and clear
@@ -309,6 +310,36 @@
 101 poke (1024+18+40*24),67
 101 poke (1024+19+40*24),67
 
+'Variables
+{var:cursorBasePrice=cp} 'float
+{var:cursorBasePriceStr$=cs$} 'string
+
+{var:grandmaBasePrice=gp} 'float
+{var:grandmaBasePriceStr$=gs$} 'string
+
+{var:factoryBasePrice=fp} 'float
+{var:factoryBasePriceStr$=fs$} 'string
+
+{var:mineBasePrice=mp} 'float
+{var:mineBasePriceStr$=ms$} 'string
+
+{var:shipmentBasePrice=sp} 'float
+{var:shipmentBasePriceStr$=ss$} 'string
+
+{var:alchemyLabBasePrice=ap} 'float
+{var:alchemyLabBasePriceStr$=as$} 'string
+
+{var:portalBasePrice=pp} 'float
+{var:portalBasePriceStr$=ps$} 'string
+
+{var:timeMachineBasePrice=tp} 'float
+{var:timeMachineBasePriceStr$=ts$} 'string
+
+{var:cursorQty%=bq%}
+{var:cursorQtyStr$=qs$}
+
+{var:cookies=co}
+{var:cookiesStr$=ct$}
 
 'texts
 101 TP$ = "Price"
@@ -317,6 +348,7 @@
 101 FOR T=0 TO LEN(T1$)-1
 101 POKE (1024+21+40*1)+T,ASC(MID$(T1$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*1),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*2)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -325,6 +357,7 @@
 101 FOR T=0 TO LEN(T2$)-1
 101 POKE (1024+21+40*4)+T,ASC(MID$(T2$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*4),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*5)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -333,6 +366,7 @@
 101 FOR T=0 TO LEN(T3$)-1
 101 POKE (1024+21+40*7)+T,ASC(MID$(T3$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*7),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*8)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -341,6 +375,7 @@
 101 FOR T=0 TO LEN(T4$)-1
 101 POKE (1024+21+40*10)+T,ASC(MID$(T4$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*10),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*11)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -349,6 +384,7 @@
 101 FOR T=0 TO LEN(T5$)-1
 101 POKE (1024+21+40*13)+T,ASC(MID$(T5$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*13),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*14)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -357,6 +393,7 @@
 101 FOR T=0 TO LEN(T6$)-1
 101 POKE (1024+21+40*16)+T,ASC(MID$(T6$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*16),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*17)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -365,6 +402,7 @@
 101 FOR T=0 TO LEN(T7$)-1
 101 POKE (1024+21+40*19)+T,ASC(MID$(T7$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*19),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*20)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -373,6 +411,7 @@
 101 FOR T=0 TO LEN(T8$)-1
 101 POKE (1024+21+40*22)+T,ASC(MID$(T8$,T+1,1)) AND 63
 101 NEXT T
+101 POKE (1024+38+40*22),48
 101 FOR T=0 TO LEN(TP$)-1
 101 POKE (1024+22+40*23)+T,ASC(MID$(TP$,T+1,1)) AND 63
 101 NEXT T
@@ -393,19 +432,11 @@
 
 'Begining of incrementing program
 
-' Variables
-{var:building1BasePrice=bp} 'float
-{var:building1BasePriceStr$=ps$} 'string
 
-{var:building1Qty%=bq%}
-{var:building1QtyStr$=qs$}
-
-{var:cookies=co}
-{var:cookiesStr$=cs$}
 
 210 {var:cookies} = 0 
-210 {var:building1BasePrice} = 15 'Base price 1st building (float)
-210 {var:building1Qty%} = 0 '1st Building counter (int)
+210 {var:cursorBasePrice} = 15 'Base price 1st building (float)
+210 {var:cursorQty%} = 0 '1st Building counter (int)
 ' end of Variables
 
 
@@ -433,23 +464,23 @@
 'end print_cookies_fct
 
 'building_cursor_watcher'
-	4000 {var:building1Qty%} = {var:building1Qty%} + 1 'increment building´s counter
-	4003 {var:cookies} = {var:cookies} - {var:building1BasePrice} 'buy the building
-	4004 {var:building1BasePrice} = {var:building1BasePrice} + 2 'increment building´s price
+	4000 {var:cursorQty%} = {var:cursorQty%} + 1 'increment building´s counter
+	4003 {var:cookies} = {var:cookies} - {var:cursorBasePrice} 'buy the building
+	4004 {var:cursorBasePrice} = {var:cursorBasePrice} + 2 'increment building´s price
 
 	'poke on building zone
-	4005 {var:building1QtyStr$} = STR$({var:building1Qty%})
-	4006 {var:building1BasePriceStr$} = STR$({var:building1BasePrice})
+	4005 {var:cursorQtyStr$} = STR$({var:cursorQty%})
+	4006 {var:cursorBasePriceStr$} = STR$({var:cursorBasePrice})
 
-	4010 L = LEN({var:building1QtyStr$})-1
+	4010 L = LEN({var:cursorQtyStr$})-1
 	4011 FOR T=0 TO L 'print num of buildings
-	4012 POKE (1024+36+40*1)+L+T,ASC(MID$({var:building1QtyStr$},T+1,1)) AND 63 'print num of buildings
+	4012 POKE (1024+36+40*1)+L+T,ASC(MID$({var:cursorQtyStr$},T+1,1)) AND 63 'print num of buildings
 	4013 NEXT T 'return at begining of loop
 	4014 L = 0
 
-	4014 L = LEN({var:building1BasePriceStr$})-1
+	4014 L = LEN({var:cursorBasePriceStr$})-1
 	4014 FOR T=0 TO L 'print price
-	4015 POKE (1024+34+40*2)+L+T,ASC(MID$({var:building1BasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4015 POKE (1024+34+40*2)+L+T,ASC(MID$({var:cursorBasePriceStr$},T+1,1)) AND 63 'print num of buildings
 	4016 NEXT T
 	4017 L = 0
 

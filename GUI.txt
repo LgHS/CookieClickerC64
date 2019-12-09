@@ -499,6 +499,12 @@
 1000 GOSUB 3000 'print_cookies_fct
 1000 GOSUB 4020 'poke_cursor_base_price
 1000 GOSUB 4120 'poke_grandma_base_price
+1000 GOSUB 4220 'poke_grandma_base_price
+1000 GOSUB 4320 'poke_grandma_base_price
+1000 GOSUB 4420 'poke_grandma_base_price
+1000 GOSUB 4520 'poke_grandma_base_price
+1000 GOSUB 4620 'poke_grandma_base_price
+1000 GOSUB 4720 'poke_grandma_base_price
 
 1001 IF K$ = " " THEN GOSUB 2000: GOTO 1000 'Watch if space is pressed
 1002 IF K$ = "1" AND {var:cookies} > B1P THEN GOSUB 4000 'Watch if can buy B1
@@ -543,7 +549,7 @@
 'poke_cursor_base_price
 	4020 L = LEN({var:cursorBasePriceStr$})-1
 	4021 FOR T=0 TO L 'print price
-	4022 POKE (1024+34+40*2)+L+T,ASC(MID$({var:cursorBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4022 POKE (1024+38+40*2)-L+T,ASC(MID$({var:cursorBasePriceStr$},T+1,1)) AND 63 'print num of buildings
 	4023 NEXT T
 	4024 L = 0
 	4025 RETURN
@@ -552,8 +558,63 @@
 'poke_grandma_base_price
 	4120 L = LEN({var:grandmaBasePriceStr$})-1
 	4121 FOR T=0 TO L 'print price
-	4122 POKE (1024+34+40*5)+L+T,ASC(MID$({var:grandmaBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4122 POKE (1024+38+40*5)-L+T,ASC(MID$({var:grandmaBasePriceStr$},T+1,1)) AND 63 'print num of buildings
 	4123 NEXT T
 	4124 L = 0
 	4125 RETURN
 'end poke_grandma_base_price
+
+'poke_factory_base_price
+	4220 L = LEN({var:factoryBasePriceStr$})-1
+	4221 FOR T=0 TO L 'print price
+	4222 POKE ((1024+38+40*8)-L)+T,ASC(MID$({var:factoryBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4223 NEXT T
+	4224 L = 0
+	4225 RETURN
+'end poke_factory_base_price
+
+'poke_mine_base_price
+	4320 L = LEN({var:mineBasePriceStr$})-1
+	4321 FOR T=0 TO L 'print price
+	4322 POKE (1024+38+40*11)-L+T,ASC(MID$({var:mineBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4323 NEXT T
+	4324 L = 0
+	4325 RETURN
+'end poke_mine_base_price
+
+'poke_shipment_base_price
+	4420 L = LEN({var:shipmentBasePriceStr$})-1
+	4421 FOR T=0 TO L 'print price
+	4422 POKE (1024+38+40*14)-L+T,ASC(MID$({var:shipmentBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4423 NEXT T
+	4424 L = 0
+	4425 RETURN
+'end poke_shipment_base_price
+
+'poke_alchemylab_base_price
+	4520 L = LEN({var:alchemyLabBasePriceStr$})-1
+	4521 FOR T=0 TO L 'print price
+	4522 POKE (1024+38+40*17)-L+T,ASC(MID$({var:alchemyLabBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4523 NEXT T
+	4524 L = 0
+	4525 RETURN
+'end poke_alchemylab_base_price
+
+'poke_portal_base_price
+	4620 L = LEN({var:portalBasePriceStr$})-1
+	4621 FOR T=0 TO L
+	4622 POKE ((1024+38+40*20)-L)+T,ASC(MID$({var:portalBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4623 NEXT T
+	4624 L = 0
+	4625 RETURN
+'end poke_portal_base_price
+
+
+'poke_timemachine_base_price
+	4720 L = LEN({var:timeMachineBasePriceStr$})-1
+	4721 FOR T=0 TO L 'print price
+	4722 POKE (1024+38+40*23)-L+T,ASC(MID$({var:timeMachineBasePriceStr$},T+1,1)) AND 63 'print num of buildings
+	4723 NEXT T
+	4724 L = 0
+	4725 RETURN
+'end poke_timemachine_base_price

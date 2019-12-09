@@ -492,7 +492,8 @@
 1000 GOSUB 3000 'print_cookies_fct
 
 1001 IF K$ = " " THEN GOSUB 2000: GOTO 1000 'Watch if space is pressed
-1002 IF K$ = "1" AND {var:cookies} > B1P THEN GOSUB 4000 'Watch if can buy Building 1 (cursor)
+1002 IF K$ = "1" AND {var:cookies} > {var:cursorBasePrice} THEN GOSUB 4000 'Watch if can buy Building 1 (cursor)
+1002 IF K$ = "2" AND {var:cookies} > {var:grandmaBasePrice} THEN GOSUB 4100 'Watch if can buy Building 1 (grandma)
 
 1998 GOTO 1000
 1999 END
@@ -534,23 +535,23 @@
 
 'building_grandma_logic'
 	'substitute cookies, add buildings, call POKEing fct etc.'
-	4000 {var:cookies} = {var:cookies} - {var:grandmaBasePrice} 'buy the building
-	4003 {var:grandmaQty%} = {var:grandmaQty%} + 1 'increment building´s counter
-	4004 {var:grandmaBasePrice} = {var:grandmaBasePrice} + 2 'increment building´s price
+	4100 {var:cookies} = {var:cookies} - {var:grandmaBasePrice} 'buy the building
+	4103 {var:grandmaQty%} = {var:grandmaQty%} + 1 'increment building´s counter
+	4104 {var:grandmaBasePrice} = {var:grandmaBasePrice} + 2 'increment building´s price
 
 	'poke on building zone
-	4005 {var:grandmaQtyStr$} = STR$({var:grandmaQty%})
-	4006 {var:grandmaBasePriceStr$} = STR$({var:grandmaBasePrice})
+	4105 {var:grandmaQtyStr$} = STR$({var:grandmaQty%})
+	4106 {var:grandmaBasePriceStr$} = STR$({var:grandmaBasePrice})
 
-	4010 L = LEN({var:grandmaQtyStr$})-1
-	4011 FOR T=0 TO L 'print num of buildings
-	4012 POKE (1024+36+40*1)+L+T,ASC(MID$({var:grandmaQtyStr$},T+1,1)) AND 63 'print num of buildings
-	4013 NEXT T 'return at begining of loop
-	4014 L = 0
+	4110 L = LEN({var:grandmaQtyStr$})-1
+	4111 FOR T=0 TO L 'print num of buildings
+	4112 POKE (1024+36+40*4)+L+T,ASC(MID$({var:grandmaQtyStr$},T+1,1)) AND 63 'print num of buildings
+	4113 NEXT T 'return at begining of loop
+	4114 L = 0
 
-	4015 GOSUB 5020 'call poke_cursor_base_price'
+	4115 GOSUB 5120 'call poke_grandma_base_price'
 
-	4099 RETURN
+	4199 RETURN
 'end building_grandma_logic'
 
 

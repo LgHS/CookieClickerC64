@@ -1,3 +1,5 @@
+'First tests for reaching something "playable"
+
 'I = increment de base
 'M = mutliplier
 'U1% = update 1 status (int)

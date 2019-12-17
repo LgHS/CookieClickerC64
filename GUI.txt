@@ -58,8 +58,8 @@
 
 101 {var:cursorBasePrice} = 15
 101 {var:grandmaBasePrice} = 100
-101 {var:factoryBasePrice} = 50
-101 {var:mineBasePrice} = 200
+101 {var:factoryBasePrice} = 500
+101 {var:mineBasePrice} = 2000
 101 {var:shipmentBasePrice} = 7000
 101 {var:alchemyLabBasePrice} = 50000
 101 {var:portalBasePrice} = 1000000
@@ -92,6 +92,8 @@
 
 101 {var:cookies=co}
 101 {var:cookiesStr$=cz$}
+
+101 {var:time%=tt}
 
 101 TP$ = "Price"
 'Cell 1
@@ -480,7 +482,7 @@
 101 POKE (1024+1+40*6)+T,ASC(MID$(TK$,T+1,1)) AND 63
 101 NEXT T
 
-
+101 {var:time%} = INT(TIME/60)
 
 'Begining of incrementing program
 210 {var:cookies} = 0 
@@ -489,11 +491,12 @@
 
 
 1000 GET K$
-1000 GOSUB 3000 'print_cookies_fct
+1000 GOSUB 6000 'print_cookies_fct
 
 1001 IF K$ = " " THEN GOSUB 2000: GOTO 1000 'Watch if space is pressed
 1002 IF K$ = "1" AND {var:cookies} > {var:cursorBasePrice} THEN GOSUB 4000 'Watch if can buy Building 1 (cursor)
 1002 IF K$ = "2" AND {var:cookies} > {var:grandmaBasePrice} THEN GOSUB 4100 'Watch if can buy Building 1 (grandma)
+1002 GOSUB 3000 'increment_fct
 
 1998 GOTO 1000
 1999 END
@@ -516,7 +519,7 @@
 	'substitute cookies, add buildings, call POKEing fct etc.'
 	4000 {var:cookies} = {var:cookies} - {var:cursorBasePrice} 'buy the building
 	4003 {var:cursorQty%} = {var:cursorQty%} + 1 'increment building´s counter
-	4004 {var:cursorBasePrice} = {var:cursorBasePrice} + 2 'increment building´s price
+	4004 {var:cursorBasePrice} = {var:cursorBasePrice} + (({var:cursorBasePrice}/100)*15) 'increment building´s price
 
 	'poke on building zone
 	4005 {var:cursorQtyStr$} = STR$({var:cursorQty%})
@@ -537,7 +540,7 @@
 	'substitute cookies, add buildings, call POKEing fct etc.'
 	4100 {var:cookies} = {var:cookies} - {var:grandmaBasePrice} 'buy the building
 	4103 {var:grandmaQty%} = {var:grandmaQty%} + 1 'increment building´s counter
-	4104 {var:grandmaBasePrice} = {var:grandmaBasePrice} + 2 'increment building´s price
+	4104 {var:grandmaBasePrice} = {var:grandmaBasePrice} + (({var:grandmaBasePrice}/100)*10) 'increment building´s price
 
 	'poke on building zone
 	4105 {var:grandmaQtyStr$} = STR$({var:grandmaQty%})
@@ -631,3 +634,9 @@
 	5724 L = 0
 	5725 RETURN
 'end poke_timemachine_base_price
+
+'print_cookies_fct
+	6000 
+	6001 
+
+'end print_cookies_fct

@@ -1,2 +1,0 @@
-{renumber}
-101 poke 1500,85: poke 1501,85

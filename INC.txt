@@ -57,8 +57,8 @@
 1003 RETURN
 
 'Get first cookie update fct
-2000 U1% = 1
-2001 M = M + ((M/100) * 1)
+2000 U1% = 
+12001 M = M + ((M/100) * 1)
 2002 I = I - U1P
 2003 RETURN
 
